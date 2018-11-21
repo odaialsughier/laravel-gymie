@@ -113,6 +113,16 @@ Route::group(['prefix' => 'sms', 'middleware' => ['auth']], function () {
     Route::get('log/refresh', ['middleware' => ['permission:manage-gymie|manage-sms'], 'uses' => 'SmsController@logRefresh']);
 });
 
+
+Route::group(['prefix' => 'gyms', 'middleware' => ['auth']],function(){
+    Route::get('/', ['middleware' => ['permission:manage-gymie|manage-enquiries|view-enquiry'], 'uses' => 'GymsController@index']);
+    Route::get('create', 'GymsController@create');
+    Route::post('/', 'GymsController@store');
+    Route::get('{id}/edit', 'GymsController@edit');
+    Route::post('{id}/update', 'GymsController@update');
+    Route::post('{id}/delete', 'GymsController@delete');
+});
+
 //enquiries
 Route::group(['prefix' => 'enquiries', 'middleware' => ['auth']], function () {
     Route::get('/', ['middleware' => ['permission:manage-gymie|manage-enquiries|view-enquiry'], 'uses' => 'EnquiriesController@index']);
